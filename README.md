@@ -13,6 +13,7 @@ iSeek aims to solve the pain points of large-scale file management and retrieval
 - **AI-Enhanced Search**: Provide intelligent search suggestions and result enhancement based on Alibaba Cloud LLM
 - **Automatic Statistical Analysis**: Use AI to automatically generate SQL queries and visualization chart configurations
 - **Modern UI**: Intuitive user interface built with React and Ant Design
+<img width="2924" height="1696" alt="image" src="https://github.com/user-attachments/assets/ac95f8ec-91f4-4eea-989f-30227006a714" />
 
 ### Key Features
 
