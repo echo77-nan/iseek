@@ -2,317 +2,327 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-iSeek 是一个基于 **OceanBase** 数据库和 **阿里云大模型** 的智能文件扫描、存储、统计和搜索系统。它能够快速扫描服务器文件系统，将文件信息存储到数据库中，并提供智能搜索、统计分析等功能。
+iSeek is an intelligent file scanning, storage, statistics, and search system based on **OceanBase** database and **Alibaba Cloud LLM**. It can quickly scan server file systems, store file information in the database, and provide intelligent search, statistical analysis, and other features.
 
 ## Introduction
 
-iSeek 旨在解决大规模文件管理和检索的痛点，通过结合 OceanBase 数据库的强大存储能力和阿里云大模型的智能分析能力，为用户提供：
+iSeek aims to solve the pain points of large-scale file management and retrieval. By combining the powerful storage capabilities of OceanBase database and the intelligent analysis capabilities of Alibaba Cloud LLM, it provides users with:
 
-- **高效文件扫描**: 快速扫描指定目录下的所有文件，自动识别文件类型、大小、修改时间等信息
-- **智能数据存储**: 将文件元数据存储到 OceanBase 数据库，支持快速查询和检索
-- **AI 增强搜索**: 基于阿里云大模型提供智能搜索建议和结果增强
-- **自动统计分析**: 使用 AI 自动生成 SQL 查询语句和可视化图表配置
-- **现代化 UI**: 基于 React 和 Ant Design 构建的直观用户界面
+- **Efficient File Scanning**: Quickly scan all files in specified directories, automatically identify file types, sizes, modification times, and other information
+- **Intelligent Data Storage**: Store file metadata in OceanBase database, supporting fast queries and retrieval
+- **AI-Enhanced Search**: Provide intelligent search suggestions and result enhancement based on Alibaba Cloud LLM
+- **Automatic Statistical Analysis**: Use AI to automatically generate SQL queries and visualization chart configurations
+- **Modern UI**: Intuitive user interface built with React and Ant Design
 
 ### Key Features
 
-- 📁 **一键扫描**: 支持递归扫描指定目录，自动跳过系统目录（如 `/proc`, `/sys` 等）
-- 💾 **智能存储**: 文件信息自动存储到 OceanBase 数据库，支持增量扫描和缓存机制
-- 🤖 **AI 统计**: 基于阿里云大模型（通义千问）自动生成统计 SQL 和 ECharts 图表配置
-- 🔍 **关键词搜索**: 支持文件名、路径等多维度搜索
-- 📊 **可视化展示**: 使用 ECharts 展示文件统计图表
-- 🌳 **目录树浏览**: 可视化浏览服务器目录结构
-- 🔄 **后台任务**: 文件扫描在后台异步执行，不阻塞用户操作
+- 📁 **One-Click Scan**: Support recursive scanning of specified directories, automatically skip system directories (such as `/proc`, `/sys`, etc.)
+- 💾 **Intelligent Storage**: File information is automatically stored in OceanBase database, supporting incremental scanning and caching mechanisms
+- 🤖 **AI Statistics**: Automatically generate statistical SQL and ECharts chart configurations based on Alibaba Cloud LLM (Tongyi Qianwen)
+- 🔍 **Keyword Search**: Support multi-dimensional search by file name, path, etc.
+- 📊 **Visualization**: Display file statistics charts using ECharts
+- 🌳 **Directory Tree Browsing**: Visually browse server directory structure
+- 🔄 **Background Tasks**: File scanning executes asynchronously in the background, not blocking user operations
 
 ## Interaction Flow
 
-iSeek 系统的典型使用流程如下：
+The typical usage flow of the iSeek system is as follows:
 
 ```
 ┌─────────────────┐
-│   用户访问前端   │
+│  User Accesses  │
+│     Frontend    │
 │  http://localhost:4000 │
 └────────┬────────┘
          │
          ▼
 ┌─────────────────┐
-│   首页 (Home)    │
-│  - 快速扫描      │
-│  - 智能搜索      │
-│  - 统计分析      │
+│  Home Page       │
+│  - Quick Scan    │
+│  - Smart Search  │
+│  - Statistics    │
 └────────┬────────┘
          │
          ├─────────────────┬─────────────────┬─────────────────┐
          ▼                 ▼                 ▼                 ▼
 ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐
-│  文件列表页   │  │   搜索页面    │  │  统计页面     │  │  目录树页面   │
+│ File List    │  │ Search Page  │  │ Statistics   │  │ Directory    │
+│   Page       │  │              │  │   Page       │  │ Tree Page    │
 │              │  │              │  │              │  │              │
-│ 1. 输入路径   │  │ 1. 输入关键词 │  │ 1. 查看统计   │  │ 1. 浏览目录   │
-│ 2. 开始扫描   │  │ 2. 执行搜索   │  │ 2. 查看图表   │  │ 2. 选择目录   │
-│ 3. 查看文件   │  │ 3. 查看结果   │  │ 3. 执行 SQL   │  │ 3. 扫描目录   │
-│ 4. 过滤类型   │  │ 4. AI 增强   │  │ 4. AI 生成   │  │              │
+│ 1. Input Path│  │ 1. Input     │  │ 1. View      │  │ 1. Browse    │
+│ 2. Start Scan│  │    Keyword   │  │    Statistics│  │    Directory │
+│ 3. View Files│  │ 2. Execute   │  │ 2. View      │  │ 2. Select    │
+│ 4. Filter    │  │    Search    │  │    Charts    │  │    Directory │
+│    Type      │  │ 3. View      │  │ 3. Execute   │  │ 3. Scan      │
+│              │  │    Results   │  │    SQL       │  │    Directory │
+│              │  │ 4. AI        │  │ 4. AI        │  │              │
+│              │  │    Enhanced │  │    Generated │  │              │
 └──────┬───────┘  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘
        │                  │                  │                  │
        └──────────────────┴──────────────────┴──────────────────┘
                               │
                               ▼
                     ┌─────────────────┐
-                    │   FastAPI 后端   │
+                    │  FastAPI Backend│
                     │  http://localhost:8000 │
                     └────────┬────────┘
                              │
          ┌───────────────────┼───────────────────┐
          ▼                   ▼                   ▼
 ┌──────────────┐  ┌──────────────┐  ┌──────────────┐
-│ 文件扫描服务  │  │  AI 服务     │  │ 数据库服务    │
+│ File Scanner │  │  AI Service  │  │  Database    │
+│   Service    │  │              │  │   Service   │
 │              │  │              │  │              │
-│ - 扫描文件   │  │ - 生成 SQL   │  │ - 存储文件   │
-│ - 提取元数据 │  │ - 生成图表   │  │ - 执行查询   │
-│ - 计算哈希   │  │ - 增强搜索   │  │ - 统计分析   │
+│ - Scan Files │  │ - Generate   │  │ - Store     │
+│ - Extract    │  │    SQL       │  │    Files     │
+│   Metadata   │  │ - Generate   │  │ - Execute    │
+│ - Calculate  │  │    Charts    │  │    Queries   │
+│   Hash       │  │ - Enhance    │  │ - Statistics │
+│              │  │    Search    │  │    Analysis  │
 └──────────────┘  └──────────────┘  └──────────────┘
 ```
 
-### 详细流程说明
+### Detailed Flow Description
 
-1. **文件扫描流程**
-   - 用户在文件列表页输入要扫描的目录路径
-   - 前端发送扫描请求到后端 API
-   - 后端检查数据库中是否已有该路径的数据（智能缓存）
-   - 如果没有，启动后台任务进行文件扫描
-   - 扫描完成后，文件信息存储到 OceanBase 数据库
-   - 前端自动刷新显示文件列表
+1. **File Scanning Flow**
+   - User enters the directory path to scan on the file list page
+   - Frontend sends scan request to backend API
+   - Backend checks if data for this path already exists in database (intelligent caching)
+   - If not, start background task for file scanning
+   - After scanning completes, file information is stored in OceanBase database
+   - Frontend automatically refreshes to display file list
 
-2. **搜索流程**
-   - 用户在搜索页输入关键词
-   - 后端从数据库查询匹配的文件
-   - AI 服务对搜索结果进行增强，提供相关建议
-   - 前端展示搜索结果和 AI 增强信息
+2. **Search Flow**
+   - User enters keyword on search page
+   - Backend queries matching files from database
+   - AI service enhances search results and provides relevant suggestions
+   - Frontend displays search results and AI enhancement information
 
-3. **统计分析流程**
-   - 系统自动统计文件类型、大小分布等信息
-   - AI 服务基于统计数据生成 SQL 查询语句
-   - AI 服务生成 ECharts 图表配置
-   - 前端渲染统计图表，用户可执行生成的 SQL
+3. **Statistical Analysis Flow**
+   - System automatically statistics file types, size distribution, and other information
+   - AI service generates SQL queries based on statistical data
+   - AI service generates ECharts chart configurations
+   - Frontend renders statistical charts, users can execute generated SQL
 
 ## Prerequisites
 
-在开始使用 iSeek 之前，请确保满足以下前置条件：
+Before starting to use iSeek, please ensure the following prerequisites are met:
 
-### 1. 系统要求
+### 1. System Requirements
 
-- **操作系统**: Linux / macOS / Windows
-- **Python**: 3.8 或更高版本
-- **Node.js**: 16.x 或更高版本
-- **npm**: 8.x 或更高版本
+- **Operating System**: Linux / macOS / Windows
+- **Python**: 3.8 or higher
+- **Node.js**: 16.x or higher
+- **npm**: 8.x or higher
 
-### 2. 数据库要求
+### 2. Database Requirements
 
-- **OceanBase 数据库**: 
-  - 版本: OceanBase 3.x 或更高
-  - 或者使用 OceanBase SeekDB（支持向量搜索的版本）
-  - 需要创建数据库和表结构（见 `database/init.sql`）
+- **OceanBase Database**: 
+  - Version: OceanBase 3.x or higher
+  - Or use OceanBase SeekDB (version with vector search support)
+  - Need to create database and table structure (see `database/init.sql`)
 
-### 3. API 密钥
+### 3. API Keys
 
-- **阿里云大模型 API Key**:
-  - 访问 [阿里云百炼控制台](https://bailian.console.aliyun.com/) 申请 API Key
-  - 支持的模型: `qwen-turbo`, `qwen-plus`, `qwen-max` 等
-  - 将 API Key 配置到环境变量或 `config.py` 中
+- **Alibaba Cloud LLM API Key**:
+  - Visit [Alibaba Cloud Bailian Console](https://bailian.console.aliyun.com/) to apply for API Key
+  - Supported models: `qwen-turbo`, `qwen-plus`, `qwen-max`, etc.
+  - Configure API Key in environment variables or `config.py`
 
-### 4. 网络要求
+### 4. Network Requirements
 
-- 能够访问 OceanBase 数据库服务器
-- 能够访问阿里云大模型 API（`https://dashscope.aliyuncs.com`）
+- Able to access OceanBase database server
+- Able to access Alibaba Cloud LLM API (`https://dashscope.aliyuncs.com`)
 
-### 5. 文件系统权限
+### 5. File System Permissions
 
-- 对要扫描的目录具有读取权限
-- 系统会自动跳过无权限访问的系统目录（如 `/proc`, `/sys` 等）
+- Read permissions for directories to be scanned
+- System will automatically skip system directories without access permissions (such as `/proc`, `/sys`, etc.)
 
 ## Quick Start
 
-### 1. 克隆项目
+### 1. Clone Project
 
 ```bash
-git clone https://github.com/your-username/iseek.git
+git clone https://github.com/echo77-nan/iseek.git
 cd isek
 ```
 
-### 2. 配置环境变量
+### 2. Configure Environment Variables
 
-创建 `.env` 文件（可选，也可以直接在 `backend/config.py` 中配置）：
+Create `.env` file (optional, can also configure directly in `backend/config.py`):
 
 ```bash
-# 数据库配置
+# Database configuration
 DB_HOST=your-db-host
 DB_PORT=2881
 DB_USER=root@sys
 DB_PASSWORD=your-password
 DB_NAME=iseek
 
-# 阿里云大模型配置
+# Alibaba Cloud LLM configuration
 DASHSCOPE_API_KEY=your-api-key
 DASHSCOPE_MODEL=qwen-turbo
 
-# 扫描配置
+# Scanner configuration
 DEFAULT_SCAN_PATH=/
 MAX_FILE_SIZE=104857600  # 100MB
 ```
 
-或者直接编辑 `backend/config.py` 文件：
+Or directly edit `backend/config.py` file:
 
 ```python
-# OceanBase数据库配置
+# OceanBase database configuration
 DB_HOST: str = "your-db-host"
 DB_PORT: int = 2881
 DB_USER: str = "root@sys"
 DB_PASSWORD: str = "your-password"
 DB_NAME: str = "iseek"
 
-# 阿里云大模型配置
+# Alibaba Cloud LLM configuration
 DASHSCOPE_API_KEY: str = "your-api-key"
 DASHSCOPE_MODEL: str = "qwen-turbo"
 ```
 
-### 3. 初始化数据库
+### 3. Initialize Database
 
-连接到 OceanBase 数据库并执行初始化脚本：
+Connect to OceanBase database and execute initialization script:
 
 ```bash
 mysql -h your-db-host -P 2881 -u root@sys -p < database/init.sql
 ```
 
-或者使用 OceanBase 客户端工具执行 `database/init.sql` 中的 SQL 语句。
+Or use OceanBase client tool to execute SQL statements in `database/init.sql`.
 
-### 4. 安装后端依赖
+### 4. Install Backend Dependencies
 
 ```bash
 cd backend
 
-# 使用虚拟环境（推荐）
+# Use virtual environment (recommended)
 python3 -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
 
-# 安装依赖
+# Install dependencies
 pip install -r requirements.txt
 ```
 
-### 5. 安装前端依赖
+### 5. Install Frontend Dependencies
 
 ```bash
 cd frontend
 npm install
 ```
 
-### 6. 启动服务
+### 6. Start Services
 
-#### 方式一：一键启动（推荐）
+#### Method 1: One-Click Start (Recommended)
 
-在项目根目录执行：
+Execute in project root directory:
 
 ```bash
-# 启动所有服务（后端 + 前端）
+# Start all services (backend + frontend)
 bash start-all.sh
 
-# 停止所有服务
+# Stop all services
 bash stop-all.sh
 ```
 
-#### 方式二：分别启动
+#### Method 2: Start Separately
 
-**启动后端**:
+**Start Backend**:
 
 ```bash
 cd backend
 
-# 开发模式
+# Development mode
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
-# 或使用后台启动脚本
+# Or use background startup script
 bash start-daemon.sh
 ```
 
-**启动前端**:
+**Start Frontend**:
 
 ```bash
 cd frontend
 
-# 开发模式
+# Development mode
 npm start
 
-# 或使用后台启动脚本
+# Or use background startup script
 bash start-daemon.sh
 ```
 
-### 7. 访问应用
+### 7. Access Application
 
-- **前端界面**: http://localhost:4000
-- **后端 API 文档**: http://localhost:8000/docs
-- **健康检查**: http://localhost:8000/api/health
+- **Frontend Interface**: http://localhost:4000
+- **Backend API Documentation**: http://localhost:8000/docs
+- **Health Check**: http://localhost:8000/api/health
 
-### 8. 开始使用
+### 8. Start Using
 
-1. **扫描文件**:
-   - 访问文件列表页
-   - 输入要扫描的目录路径（如 `/home/user/documents`）
-   - 点击"开始扫描"按钮
-   - 等待扫描完成（后台异步执行）
+1. **Scan Files**:
+   - Access file list page
+   - Enter directory path to scan (e.g., `/home/user/documents`)
+   - Click "Start Scan" button
+   - Wait for scan to complete (executes asynchronously in background)
 
-2. **搜索文件**:
-   - 访问搜索页面
-   - 输入关键词（如文件名、路径等）
-   - 查看搜索结果和 AI 增强建议
+2. **Search Files**:
+   - Access search page
+   - Enter keyword (e.g., file name, path, etc.)
+   - View search results and AI enhancement suggestions
 
-3. **查看统计**:
-   - 访问统计页面
-   - 查看文件类型分布、大小分布等统计信息
-   - 查看 AI 生成的 SQL 查询和图表
+3. **View Statistics**:
+   - Access statistics page
+   - View file type distribution, size distribution, and other statistical information
+   - View AI-generated SQL queries and charts
 
 ## Project Structure
 
 ```
 iseek/
-├── backend/                 # 后端服务
+├── backend/                 # Backend service
 │   ├── app/
 │   │   ├── __init__.py
-│   │   ├── main.py          # FastAPI 主应用
-│   │   ├── scanner.py       # 文件扫描服务
-│   │   ├── database.py      # 数据库操作
-│   │   ├── ai_service.py    # 阿里云大模型服务
-│   │   └── search.py        # 搜索服务
-│   ├── config.py            # 配置文件
-│   ├── requirements.txt     # Python 依赖
-│   ├── start.sh             # 启动脚本
-│   ├── start-daemon.sh      # 后台启动脚本
-│   └── stop.sh              # 停止脚本
-├── frontend/                # 前端应用
+│   │   ├── main.py          # FastAPI main application
+│   │   ├── scanner.py       # File scanning service
+│   │   ├── database.py      # Database operations
+│   │   ├── ai_service.py    # Alibaba Cloud LLM service
+│   │   └── search.py        # Search service
+│   ├── config.py            # Configuration file
+│   ├── requirements.txt     # Python dependencies
+│   ├── start.sh             # Startup script
+│   ├── start-daemon.sh      # Background startup script
+│   └── stop.sh              # Stop script
+├── frontend/                # Frontend application
 │   ├── src/
-│   │   ├── api/             # API 调用
-│   │   ├── pages/           # 页面组件
+│   │   ├── api/             # API calls
+│   │   ├── pages/           # Page components
 │   │   │   ├── HomePage.jsx
 │   │   │   ├── FileListPage.jsx
 │   │   │   ├── SearchPage.jsx
 │   │   │   ├── StatisticsPage.jsx
 │   │   │   └── DirectoryTreePage.jsx
-│   │   ├── App.jsx          # 主应用组件
-│   │   └── main.jsx         # 入口文件
-│   ├── package.json         # Node.js 依赖
-│   ├── vite.config.js       # Vite 配置
-│   ├── start.sh             # 启动脚本
-│   ├── start-daemon.sh      # 后台启动脚本
-│   └── stop.sh              # 停止脚本
-├── database/                # 数据库脚本
-│   └── init.sql             # 初始化 SQL
-├── start-all.sh             # 一键启动所有服务
-├── stop-all.sh              # 一键停止所有服务
-└── README.md                # 项目文档
+│   │   ├── App.jsx          # Main application component
+│   │   └── main.jsx         # Entry file
+│   ├── package.json         # Node.js dependencies
+│   ├── vite.config.js       # Vite configuration
+│   ├── start.sh             # Startup script
+│   ├── start-daemon.sh      # Background startup script
+│   └── stop.sh              # Stop script
+├── database/                # Database scripts
+│   └── init.sql             # Initialization SQL
+├── start-all.sh             # One-click start all services
+├── stop-all.sh              # One-click stop all services
+└── README.md                # Project documentation
 ```
 
 ## Configuration
 
-### 数据库配置
+### Database Configuration
 
-在 `backend/config.py` 或环境变量中配置 OceanBase 数据库连接信息：
+Configure OceanBase database connection information in `backend/config.py` or environment variables:
 
 ```python
 DB_HOST: str = "your-db-host"
@@ -322,116 +332,116 @@ DB_PASSWORD: str = "your-password"
 DB_NAME: str = "iseek"
 ```
 
-### AI 模型配置
+### AI Model Configuration
 
-配置阿里云大模型 API：
+Configure Alibaba Cloud LLM API:
 
 ```python
 DASHSCOPE_API_KEY: str = "your-api-key"
-DASHSCOPE_MODEL: str = "qwen-turbo"  # 可选: qwen-plus, qwen-max 等
+DASHSCOPE_MODEL: str = "qwen-turbo"  # Optional: qwen-plus, qwen-max, etc.
 ```
 
-### 扫描配置
+### Scanner Configuration
 
 ```python
-DEFAULT_SCAN_PATH: str = "/"          # 默认扫描路径
-MAX_FILE_SIZE: int = 104857600        # 最大文件大小（100MB）
+DEFAULT_SCAN_PATH: str = "/"          # Default scan path
+MAX_FILE_SIZE: int = 104857600        # Maximum file size (100MB)
 ```
 
 ## API Documentation
 
-启动后端服务后，访问以下地址查看 API 文档：
+After starting the backend service, visit the following addresses to view API documentation:
 
 - **Swagger UI**: http://localhost:8000/docs
 - **ReDoc**: http://localhost:8000/redoc
 
-### 主要 API 端点
+### Main API Endpoints
 
-- `POST /api/scan` - 扫描目录
-- `GET /api/search` - 搜索文件
-- `GET /api/files` - 获取文件列表
-- `GET /api/statistics` - 获取统计信息
-- `GET /api/directory-tree` - 获取目录树
-- `POST /api/generate-sql` - 生成 SQL 查询
-- `POST /api/execute-sql` - 执行 SQL 查询
+- `POST /api/scan` - Scan directory
+- `GET /api/search` - Search files
+- `GET /api/files` - Get file list
+- `GET /api/statistics` - Get statistics
+- `GET /api/directory-tree` - Get directory tree
+- `POST /api/generate-sql` - Generate SQL query
+- `POST /api/execute-sql` - Execute SQL query
 
 ## FAQ
 
-### 1. 如何更改使用的 AI 模型？
+### 1. How to Change the AI Model Used?
 
-在 `backend/config.py` 中修改 `DASHSCOPE_MODEL` 配置，或在环境变量中设置。支持的模型包括：
-- `qwen-turbo` (默认，免费额度较高)
+Modify the `DASHSCOPE_MODEL` configuration in `backend/config.py`, or set it in environment variables. Supported models include:
+- `qwen-turbo` (default, higher free quota)
 - `qwen-plus`
 - `qwen-max`
 - `qwen-long`
 
-更多模型信息请查看 [阿里云百炼模型市场](https://bailian.console.aliyun.com/)。
+For more model information, visit [Alibaba Cloud Bailian Model Marketplace](https://bailian.console.aliyun.com/).
 
-### 2. 扫描时出现权限错误怎么办？
+### 2. What to Do When Permission Errors Occur During Scanning?
 
-系统会自动跳过无权限访问的系统目录（如 `/proc`, `/sys`, `/dev` 等）。如果扫描用户目录时出现权限错误，请确保：
-- 对目标目录有读取权限
-- 使用具有适当权限的用户运行服务
+The system will automatically skip system directories without access permissions (such as `/proc`, `/sys`, `/dev`, etc.). If permission errors occur when scanning user directories, please ensure:
+- Read permissions for the target directory
+- Run the service with a user that has appropriate permissions
 
-### 3. 如何查看扫描进度？
+### 3. How to View Scan Progress?
 
-扫描任务在后台异步执行。可以通过以下方式查看：
-- 查看后端日志: `tail -f backend/logs/backend.log`
-- 在文件列表页查看文件数量变化
-- 检查数据库中的 `scan_time` 字段
+Scan tasks execute asynchronously in the background. You can view progress through:
+- View backend logs: `tail -f backend/logs/backend.log`
+- Check file count changes on the file list page
+- Check the `scan_time` field in the database
 
-### 4. 如何重新扫描已扫描过的目录？
+### 4. How to Rescan a Previously Scanned Directory?
 
-在文件列表页，点击"强制重新扫描"按钮，或使用 API：
+On the file list page, click the "Force Rescan" button, or use the API:
 ```bash
 curl -X POST "http://localhost:8000/api/scan?path=/your/path&force_rescan=true"
 ```
 
-### 5. 如何修改前端端口？
+### 5. How to Change Frontend Port?
 
-编辑 `frontend/vite.config.js` 中的 `server.port` 配置，或使用环境变量：
+Edit the `server.port` configuration in `frontend/vite.config.js`, or use environment variables:
 ```bash
 PORT=3000 npm start
 ```
 
-### 6. 如何修改后端端口？
+### 6. How to Change Backend Port?
 
-修改启动命令中的端口参数：
+Modify the port parameter in the startup command:
 ```bash
 uvicorn app.main:app --host 0.0.0.0 --port 9000
 ```
 
-或修改 `start.sh` 和 `start-daemon.sh` 脚本中的端口配置。
+Or modify the port configuration in `start.sh` and `start-daemon.sh` scripts.
 
 ## Contributing
 
-欢迎贡献代码！请遵循以下步骤：
+Contributions are welcome! Please follow these steps:
 
-1. Fork 本仓库
-2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 开启 Pull Request
+1. Fork this repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## License
 
-本项目采用 MIT 许可证。详情请参阅 [LICENSE](LICENSE) 文件。
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
-- [OceanBase](https://www.oceanbase.com/) - 分布式数据库
-- [阿里云百炼](https://bailian.console.aliyun.com/) - 大模型服务
-- [FastAPI](https://fastapi.tiangolo.com/) - 现代 Python Web 框架
-- [React](https://react.dev/) - UI 框架
-- [Ant Design](https://ant.design/) - UI 组件库
-- [ECharts](https://echarts.apache.org/) - 数据可视化
+- [OceanBase](https://www.oceanbase.com/) - Distributed Database
+- [Alibaba Cloud Bailian](https://bailian.console.aliyun.com/) - LLM Service
+- [FastAPI](https://fastapi.tiangolo.com/) - Modern Python Web Framework
+- [React](https://react.dev/) - UI Framework
+- [Ant Design](https://ant.design/) - UI Component Library
+- [ECharts](https://echarts.apache.org/) - Data Visualization
 
 ## Contact
 
-如有问题或建议，请通过以下方式联系：
+For questions or suggestions, please contact us through:
 
-- 提交 [Issue](https://github.com/echo77-nan/demo)
-- 发送邮件至: echo.ln@oceanbase.com
+- Submit an [Issue](https://github.com/echo77-nan/iseek/issues)
+- Send email to: echo.ln@oceanbase.com
 
 ---
 
