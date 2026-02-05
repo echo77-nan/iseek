@@ -1,6 +1,6 @@
 # iSeek - Intelligent File Scanning and Search System
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 iSeek is an intelligent file scanning, storage, statistics, and search system based on **OceanBase** database and **Alibaba Cloud LLM**. It can quickly scan server file systems, store file information in the database, and provide intelligent search, statistical analysis, and other features.
 
@@ -425,7 +425,7 @@ Contributions are welcome! Please follow these steps:
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
